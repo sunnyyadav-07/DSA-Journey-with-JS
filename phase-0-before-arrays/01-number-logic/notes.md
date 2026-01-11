@@ -148,6 +148,205 @@ This helped me **understand the concept clearly**.
 * Time: `O(number of set bits)`
 * Space: `O(1)`
 
+---
+
+## 5️⃣ Strong Number
+
+### 🔹 Definition
+
+A **Strong Number** is a number whose **sum of factorials of its digits** is equal to the original number.
+
+Example:
+
+* `145` → `1! + 4! + 5! = 1 + 24 + 120 = 145` ✅
+
+---
+
+### 🔹 FLOW / APPROACH
+
+1. Store the original number in a copy variable.
+2. Initialize `sum = 0`.
+3. Extract digits one by one using modulo (`% 10`).
+4. For each digit:
+
+   * Calculate factorial of the digit.
+   * Add it to `sum`.
+5. Remove the last digit (divide by 10).
+6. After loop ends:
+
+   * If `sum == original number` → Strong Number
+   * Else → Not Strong Number
+
+---
+
+### 🔹 Key DSA Insight
+
+* Digits are independent → factorial is applied **digit-wise**.
+* This is a classic **digit extraction + accumulation** problem.
+
+---
+
+## 2️⃣ Sum of Prime Digits in a Number
+
+### 🔹 Definition
+
+Find the **sum of digits** in a number which are **prime**.
+
+📌 Prime digits are **fixed**:
+
+```
+2, 3, 5, 7
+```
+
+---
+
+### 🔹 FLOW / APPROACH
+
+1. Initialize `sum = 0`.
+2. Extract digits from the number one by one.
+3. For each digit, check:
+
+   * Is it one of `{2, 3, 5, 7}`?
+4. If yes → add digit to `sum`.
+5. Ignore non-prime digits.
+6. After all digits processed:
+
+   * If `sum > 0` → print sum
+   * Else → no prime digits present
+
+---
+
+### 🔹 Example Dry Run
+
+Number: `23745`
+
+* Digits: `2, 3, 7, 4, 5`
+* Prime digits: `2, 3, 7, 5`
+* Sum = `17`
+
+---
+
+### 🔹 Key DSA Insight
+
+* No range involved.
+* Prime check is **not dynamic** here because digits are limited (0–9).
+
+---
+
+## 3️⃣ All Divisors in Sorted Order
+
+### 🔹 Definition
+
+Print **all divisors** of a number in **ascending (sorted) order**.
+
+---
+
+### 🔹 Core Concept (MOST IMPORTANT)
+
+> **Divisors always come in pairs**
+
+If `i` divides `n`, then `(n / i)` is also a divisor.
+
+Example:
+
+```
+36 → (1,36), (2,18), (3,12), (4,9), (6,6)
+```
+
+The middle point is `√n`.
+
+---
+
+### 🔹 WHY √n is enough?
+
+* After `√n`, divisor pairs repeat in reverse.
+* So checking till `√n` gives **all divisors** efficiently.
+
+
+---
+
+### 🔹 FLOW / APPROACH (WITHOUT SORT)
+
+1. Loop `i` from `1` to `√n`.
+2. If `n % i == 0`:
+
+   * `i` is a **small divisor** → print/store directly.
+   * `n / i` is a **big divisor** → store separately.
+3. Avoid duplicate when `i == n / i` (perfect square case).
+4. After loop ends:
+
+   * Print big divisors in **reverse order**.
+
+This naturally produces sorted order.
+
+---
+
+### 🔹 Example
+
+Number: `28`
+
+* Small divisors: `1, 2, 4`
+* Big divisors: `28, 14, 7`
+
+Sorted output:
+
+```
+1, 2, 4, 7, 14, 28
+```
+
+---
+
+### 🔹 Key DSA Insight
+
+* Sorting is achieved by **logic**, not by `sort()`.
+* This approach is **interview-preferred**.
+
+---
+
+## 4️⃣ Harshad Number (Niven Number)
+
+### 🔹 Definition
+
+A **Harshad Number** is a number that is **divisible by the sum of its digits**.
+
+---
+
+### 🔹 FLOW / APPROACH
+
+1. Store original number in a copy variable.
+2. Initialize `sum = 0`.
+3. Extract digits one by one.
+4. Add each digit to `sum`.
+5. After loop:
+
+   * If `original number % sum == 0` → Harshad Number
+   * Else → Not Harshad Number
+
+---
+
+### 🔹 Example
+
+Number: `18`
+
+* Digit sum: `1 + 8 = 9`
+* `18 % 9 == 0` → Harshad ✅
+
+---
+
+### 🔹 Key DSA Insight
+
+* This is a **digit-sum + divisibility** problem.
+* Similar pattern used in multiple number problems.
+
+---
+
+## 🔁 Common Pattern Across All Problems
+
+1. Store original number.
+2. Extract digits using `% 10`.
+3. Reduce number using `/ 10`.
+4. Apply condition / calculation on digits.
+5. Compare final result with original number.
 
 ---
 
