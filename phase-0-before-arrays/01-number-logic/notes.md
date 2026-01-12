@@ -186,7 +186,7 @@ Example:
 
 ---
 
-## 2️⃣ Sum of Prime Digits in a Number
+## 6️⃣ Sum of Prime Digits in a Number
 
 ### 🔹 Definition
 
@@ -233,7 +233,7 @@ Number: `23745`
 
 ---
 
-## 3️⃣ All Divisors in Sorted Order
+## 7️⃣ All Divisors in Sorted Order
 
 ### 🔹 Definition
 
@@ -303,7 +303,7 @@ Sorted output:
 
 ---
 
-## 4️⃣ Harshad Number (Niven Number)
+## 8️⃣ Harshad Number (Niven Number)
 
 ### 🔹 Definition
 
@@ -349,5 +349,80 @@ Number: `18`
 5. Compare final result with original number.
 
 ---
+
+
+## 9️⃣ Find Nth Fibonacci Number (Iterative)
+
+### Problem Statement
+Given a number `N`, find the **Nth Fibonacci number** using an **iterative approach**.
+
+### Fibonacci Definition
+- Fibonacci series: `0, 1, 1, 2, 3, 5, 8, ...`
+- Formula: `F(n) = F(n - 1) + F(n - 2)`
+- **0-based indexing is assumed**:
+  - F(0) = 0
+  - F(1) = 1
+
+---
+
+### Approach (My Thinking)
+- The question asks only for the **Nth Fibonacci number**, not the entire series.
+- To compute Fibonacci numbers, only the **last two values** are required.
+- Therefore:
+  - `f0` stores the previous value
+  - `f1` stores the current value
+- I used a loop to calculate the next Fibonacci number iteratively.
+- I did **not use an array** to store the series, which helps in saving space.
+
+---
+
+### Steps
+1. If `N = 0`, return `0`
+2. If `N = 1`, return `1`
+3. Run a loop from `2` to `N`
+4. In each iteration:
+   - `next = f0 + f1`
+   - Update `f0 = f1`
+   - Update `f1 = next`
+5. After the loop ends, `f1` contains the **Nth Fibonacci number**
+
+---
+
+## 🔟 Find Sum of Factorial of Digits
+
+### Problem Statement
+Given a number, find the **sum of the factorial of each digit**.
+
+---
+
+### Approach (My Thinking)
+- The problem does **not** require finding the factorial of the entire number.
+- Instead, the factorial of **each individual digit** is calculated and added.
+- To process each digit, the number must be traversed digit by digit using a loop.
+- Since digits range from `0` to `9`, their factorial values are fixed and limited.
+
+---
+
+### Steps
+1. Extract digits one by one using:
+   - `digit = number % 10`
+2. Compute the factorial of the extracted digit
+3. Add the factorial value to `sum`
+4. Remove the last digit from the number:
+   - `number = Math.floor(number / 10)`
+5. Repeat until the number becomes `0`
+6. The final value of `sum` is the required answer
+
+---
+
+### Optimization Idea
+- Computing factorial using a loop for every digit is not strictly necessary.
+- Since digits are only from `0` to `9`, their factorials can be **precomputed** and reused.
+
+**Example**:
+```js
+ let factArr = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880];
+ sum += factArr[digit];
+ ```
 
 ✅ *These notes reflect my learning journey and approach while starting DSA from basics.*
