@@ -424,5 +424,32 @@ Given a number, find the **sum of the factorial of each digit**.
  let factArr = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880];
  sum += factArr[digit];
  ```
+ ## 11. Decimal to Binary Conversion
+
+## 📌 Problem Statement
+Convert a given **decimal number** into its **binary representation**.
+
+---
+
+## 🧠 Core Logic (Approach)
+- Binary number system works on **base 2**
+- Repeatedly:
+  1. Take remainder with `% 2`
+  2. Divide number by `2`
+  3. Store remainders in **reverse order**
+
+---
+
+## ✅ Step-by-Step Approach
+1. Initialize an empty string `binary`
+2. While number is greater than 0:
+   - Extract last binary digit using `number % 2`
+   - Add it to the **left side** of the binary string
+   - Update number using `Math.floor(number / 2)`
+3. Final `binary` string is the result
+
+---
+
+
 
 ✅ *These notes reflect my learning journey and approach while starting DSA from basics.*
