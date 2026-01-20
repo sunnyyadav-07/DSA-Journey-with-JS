@@ -267,4 +267,111 @@ for (let i = 1; i <= 100; i++) {
 
 ---
 
+## 4. Find First K Prime Numbers
+
+### 📌 Problem Statement  
+Given a number **K**, print the **first K prime numbers** starting from 2.
+
+---
+
+### 🧠 Concept  
+A **prime number** is a number greater than 1 that is divisible only by 1 and itself.
+
+Instead of checking all numbers in a range, we:
+- Start from 2
+- Check each number for primality
+- Keep a count of how many primes we have found
+- Stop when count == K
+
+---
+
+### 🔁 Approach (Optimized Thinking)
+1. Print `2` separately (only even prime)
+2. Check only **odd numbers** after that
+3. For each number, check divisibility from `3` to `√n`
+4. If prime → print → increment count
+5. Stop when count reaches K
+
+---
+
+### ⏱ Time Complexity  
+- Prime check: **O(√n)**  
+- Overall: Depends on how large the Kth prime is  
+- Optimized by skipping even numbers
+
+---
+
+### ✅ Optimized JavaScript Code
+```js
+let K = 10;
+
+if (K >= 1) {
+  console.log(2);
+}
+
+let count = 1;
+let num = 3;
+
+while (count < K) {
+  let isPrime = true;
+
+  for (let i = 3; i <= Math.floor(Math.sqrt(num)); i += 2) {
+    if (num % i === 0) {
+      isPrime = false;
+      break;
+    }
+  }
+
+  if (isPrime) {
+    console.log(num);
+    count++;
+  }
+
+  num += 2; // skip even numbers
+}
+```
+ **Example**
+Input: K = 5
+Output:
+2
+3
+5
+7
+11
+
+## 2. Count Numbers with Even Digit Count
+
+ **Problem Statement**
+- Count how many numbers in a given range (1 to N) have an even number of digits
+
+🔹 Approach  Brute Force (Math Based)
+🔁 Steps
+1. Loop from 1 to N
+2. Count digits of each number using division
+3. If digit count is even → increment answer
+
+ **Time Complexity**
+
+O(N log N)
+(Because digit counting takes log N time)
+
+✅* JavaScript Code*
+```js
+let N = 1000;
+let count = 0;
+
+for (let i = 1; i <= N; i++) {
+  let num = i;
+  let digits = 0;
+
+  while (num > 0) {
+    num = Math.floor(num / 10);
+    digits++;
+  }
+
+  if (digits % 2 === 0) {
+    count++;
+  }
+  ```
+
 > ✍️ *Note:* This repository reflects my daily practice and improvement in **loop-based problem solving and number theory fundamentals.*
