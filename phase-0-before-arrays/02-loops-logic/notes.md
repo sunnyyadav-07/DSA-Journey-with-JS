@@ -339,7 +339,7 @@ Output:
 7
 11
 
-## 2. Count Numbers with Even Digit Count
+## 5. Count Numbers with Even Digit Count
 
  **Problem Statement**
 - Count how many numbers in a given range (1 to N) have an even number of digits
@@ -373,5 +373,193 @@ for (let i = 1; i <= N; i++) {
     count++;
   }
   ```
+
+1. Palindrome Number  
+2. Find Maximum Digit in a Number  
+3. Find Second Largest Digit in a Number  
+4. Check if Digits are Strictly Increasing  
+5. Check if a Number is Rotation of Another Number  
+
+---
+
+## 6. Find Maximum Digit in a Number
+
+ **Problem**
+
+Find the largest digit (0–9) present in a given number.
+
+✅ Example
+- 53829 → Maximum digit = 9
+- 1004 → Maximum digit = 4
+
+**Logic**
+1. Initialize maxDigit = 0
+2. Extract digits using % 10
+3. Compare each digit with maxDigit
+4. Update if greater
+5. Continue until number becomes 0
+
+**JavaScript Code**
+```js
+let number = 53829;
+let copyNum = number;
+let maxDigit = 0;
+
+while (copyNum > 0) {
+  let digit = copyNum % 10;
+
+  if (digit > maxDigit) {
+    maxDigit = digit;
+  }
+
+  copyNum = Math.floor(copyNum / 10);
+}
+
+console.log("Maximum digit in", number, "is", maxDigit);
+```
+## 7. Find Second Largest Digit in a Number
+
+**Problem**
+- Find the second largest digit in a given number.
+- If it doesn’t exist (all digits same or only one digit), print a proper message.
+
+**Examples**
+
+* `67426` → Largest = `7`, Second Largest = `6`
+* `1111` → `No` second largest digit
+* `5` → `No` second largest digit
+
+**Logic** 
+1. Initialize:
+- largest = -1
+- secondLargest = -1
+2. Extract each digit
+3. If digit > largest:
+- largest = digit
+4. Else if digit is not equal to largest and greater than `secondLargest`:
+- Update secondLargest
+5. End of loop:
+- If secondLargest is still -1, it doesn’t exist
+
+**JavaScript Code**
+```js
+let number = 67426;
+let copyNum = number;
+
+let largest = -1;
+let secondLargest = -1;
+
+while (copyNum > 0) {
+  let digit = copyNum % 10;
+
+  if (digit > largest) {
+    secondLargest = largest;
+    largest = digit;
+  } else if (digit !== largest && digit > secondLargest) {
+    secondLargest = digit;
+  }
+
+  copyNum = Math.floor(copyNum / 10);
+}
+
+if (secondLargest === -1) {
+  console.log("Second largest digit does not exist");
+} else {
+  console.log("Largest digit:", largest);
+  console.log("Second largest digit:", secondLargest);
+}
+```
+## 8. Check if Digits are Strictly Increasing
+
+**Problem**
+- Check whether digits of a number are in strictly increasing order (left to right).
+- Equal digits are ❌ not allowed.
+
+**Key Idea**
+We extract digits right to left, so:
+To confirm left-to-right increasing, digits must be strictly decreasing when scanned right-to-left.
+
+**JavaScript Code**
+```js
+let number = 12349;
+let copyNum = number;
+
+let prevDigit = copyNum % 10;
+copyNum = Math.floor(copyNum / 10);
+
+let isIncreasing = true;
+
+while (copyNum > 0) {
+  let nextDigit = copyNum % 10;
+
+  if (nextDigit >= prevDigit) {
+    isIncreasing = false;
+    break;
+  }
+
+  prevDigit = nextDigit;
+  copyNum = Math.floor(copyNum / 10);
+}
+
+if (isIncreasing) {
+  console.log("Digits are in strictly increasing order in", number);
+} else {
+  console.log("Digits are NOT in strictly increasing order in", number);
+}
+```
+## 9. Check if a Number is Rotation of Another Number
+
+**Problem**
+* Check whether number B is a rotation of A
+
+**Logic** 
+1. Count digits in A
+2. Rotate A digit-by-digit
+3. After each rotation, compare with B
+4. If match found → Rotation
+
+**avaScript Code**
+```js
+
+let a = 1234;
+let copyA = a;
+let b = 4312;
+let isRotation = false;
+function countDigit(num) {
+  let count = 0;
+  while (num > 0) {
+    num = Math.floor(num / 10);
+    count++;
+  }
+  return count;
+}
+let digitsInA = countDigit(a);
+let digitsInB = countDigit(b);
+let digts = digitsInA;
+if (digitsInA !== digitsInB) {
+  console.log("Not a rotation");
+} else {
+  let rotated = a;
+  let power = Math.pow(10, digts - 1);
+  for (let i = 1; i <= digts; i++) {
+    let firstDigit = Math.floor(rotated / power);
+    let restDigit = rotated % power;
+    rotated = restDigit * 10 + firstDigit;
+    if (rotated === b) {
+      isRotation = true;
+      break;
+    }
+  }
+  if (isRotation) console.log("b is rotation of a");
+  else console.log("b is not rotation of a");
+}
+```
+## Time & Space Complexity
+| Problem              | Time                  | Space |
+| -------------------- | --------------------- | ----- |
+| Max Digit            | O(n)                  | O(1)  |
+| Second Largest Digit | O(n)                  | O(1)  |
+| Strict Increasing    | O(n)                  | O(1)  |
+| Rotation Check       | O(n²) (number method) | O(1)  |
 
 > ✍️ *Note:* This repository reflects my daily practice and improvement in **loop-based problem solving and number theory fundamentals.*
