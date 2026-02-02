@@ -251,4 +251,206 @@ console.log(factorial(-3)); // not possible
 * Math logic (`%`, `/`, powers, factorials)
 * Time complexity awareness
 
+---
+
+## 7️⃣ Palindrome Check Function
+
+###  Concept
+
+A number is a **palindrome** if it reads the same **forward and backward**.
+
+###  Idea
+
+* Reverse the number using `% 10` and `/ 10`
+* Compare reversed number with original
+
+### ✅ Code
+
+```js
+function isPalindrome(number) {
+  if (!Number.isInteger(number)) return "only integer allowed";
+  if (number < 0) return "not possible";
+
+  let temp = number;
+  let reverse = 0;
+
+  while (temp > 0) {
+    let digit = temp % 10;
+    reverse = reverse * 10 + digit;
+    temp = Math.floor(temp / 10);
+  }
+
+  return number === reverse;
+}
+
+console.log(isPalindrome(121)); // true
+console.log(isPalindrome(123)); // false
+console.log(isPalindrome(0));   // true
+```
+
+### ⏱ Complexity
+
+* Time: **O(n)** (n = number of digits)
+* Space: **O(1)**
+
+---
+
+## 8️⃣ Largest Digit in a Number
+
+###  Concept
+
+Extract each digit and keep track of the **maximum digit** seen so far.
+
+###  Idea
+
+* Use `Math.abs()` to ignore negative sign
+* Use `% 10` to get last digit
+* Use `/ 10` to shrink number
+
+###  Code
+
+```js
+function findLargestDigit(number) {
+  if (!Number.isInteger(number)) return "only integer allowed";
+
+  number = Math.abs(number);
+
+  if (number === 0) return 0;
+
+  let temp = number;
+  let largest = 0;
+
+  while (temp > 0) {
+    let digit = temp % 10;
+    if (digit > largest) largest = digit;
+    temp = Math.floor(temp / 10);
+  }
+
+  return largest;
+}
+
+console.log(findLargestDigit(14576)); // 7
+console.log(findLargestDigit(-908));  // 9
+console.log(findLargestDigit(0));     // 0
+```
+
+### ⏱ Complexity
+
+* Time: **O(n)**
+* Space: **O(1)**
+
+---
+
+## 9️⃣ Nth Fibonacci Function
+
+###  Concept
+
+Fibonacci sequence:
+
+```
+F(1) = 0
+F(2) = 1
+F(n) = F(n-1) + F(n-2)
+```
+
+###  Idea
+
+* Use two variables to store last two Fibonacci numbers
+* Iteratively compute next number
+
+###  Code
+
+```js
+function fibonacci(number) {
+  if (!Number.isInteger(number)) return "only integer allowed";
+  if (number <= 0) return "not possible";
+
+  if (number === 1) return 0;
+  if (number === 2) return 1;
+
+  let f1 = 0;
+  let f2 = 1;
+
+  for (let i = 3; i <= number; i++) {
+    let nthFibonacci = f1 + f2;
+    f1 = f2;
+    f2 = nthFibonacci;
+  }
+
+  return f2;
+}
+
+console.log(fibonacci(1)); // 0
+console.log(fibonacci(2)); // 1
+console.log(fibonacci(5)); // 3
+```
+
+### ⏱ Complexity
+
+* Time: **O(n)**
+* Space: **O(1)**
+
+---
+
+## 🔟 GCD (Greatest Common Divisor)
+
+###  Concept
+
+**GCD** is the **largest number** that divides two numbers completely (no remainder).
+
+###  Euclidean Algorithm
+
+> Repeatedly replace:
+> `a = b` and `b = a % b`
+> until `b` becomes `0`. The last non-zero `a` is the GCD.
+
+###  Code (Optimized)
+
+```js
+function gcd(a, b) {
+  if (!Number.isInteger(a) || !Number.isInteger(b)) return "only integers allowed";
+
+  a = Math.abs(a);
+  b = Math.abs(b);
+
+  while (b !== 0) {
+    let remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+
+  return a;
+}
+
+console.log(gcd(12, 18));  // 6
+console.log(gcd(8, 32));   // 8
+console.log(gcd(-12, 18)); // 6
+```
+
+### ⏱ Complexity
+
+* Time: **O(log n)**
+* Space: **O(1)**
+
+---
+
+##  Summary Table
+
+| Function      | Key Concept         | Time Complexity |
+| ------------- | ------------------- | --------------- |
+| Palindrome    | Reverse & Compare   | O(n)            |
+| Largest Digit | Max Digit Scan      | O(n)            |
+| Fibonacci     | Iterative DP        | O(n)            |
+| GCD           | Euclidean Algorithm | O(log n)        |
+
+---
+
+##  Learning Outcome
+
+* Digit extraction using `%` and `/`
+* Edge case handling (0, negative numbers, invalid input)
+* Space and time complexity awareness
+
+
+
 
