@@ -416,3 +416,198 @@ console.log(result);
 | Power of 2 Check            | Bitwise Trick      | O(1)      | Advanced / Interview |
 
 ---
+
+## 6️⃣ Find First Repeating Digit
+
+### 🔹 Problem Statement
+
+Given a number, find the **first repeating digit**.
+
+ *First repeating digit* means **the digit whose second occurrence appears first when traversing from left to right**.
+
+###  Approach (How it works)
+
+1. Count total digits in the number.
+2. Use an array of size `10` to track visited digits.
+3. Traverse the number **from left to right** using powers of 10.
+4. If a digit is already marked as seen, that digit is the answer.
+
+###  Time & Space Complexity
+
+* Time: `O(n)`
+* Space: `O(1)` (array size fixed to 10)
+
+###  Code
+
+```js
+let number = 12434532;
+
+// count digits
+let temp = number;
+let digits = 0;
+while (temp > 0) {
+  digits++;
+  temp = Math.floor(temp / 10);
+}
+
+let power = Math.pow(10, digits - 1);
+let seen = new Array(10).fill(false);
+let repeatingDigit = null;
+let copy = number;
+
+// left to right traversal
+while (power > 0) {
+  let digit = Math.floor(copy / power);
+
+  if (seen[digit]) {
+    repeatingDigit = digit;
+    break;
+  }
+
+  seen[digit] = true;
+  copy = copy % power;
+  power = Math.floor(power / 10);
+}
+
+if (repeatingDigit !== null) {
+  console.log("First repeating digit:", repeatingDigit);
+} else {
+  console.log("Repeating digit does not exist");
+}
+```
+
+---
+
+## 7️⃣ Find First Non-Repeating Digit
+
+###  Problem Statement
+
+Given a number, find the **first digit (from left)** that does **not repeat** anywhere in the number.
+
+###  Approach (How it works)
+
+1. Traverse the number from right to left and count frequency of each digit.
+2. Count total digits.
+3. Traverse again from **left to right** using powers of 10.
+4. The first digit whose frequency is `1` is the answer.
+
+###  Time & Space Complexity
+
+* Time: `O(n)`
+* Space: `O(1)`
+
+###  Code
+
+```js
+let number = 24373542;
+
+if (number <= 9) {
+  console.log("First non-repeating digit:", number);
+} else {
+  let count = new Array(10).fill(0);
+  let temp = number;
+  let digits = 0;
+
+  // frequency count
+  while (temp > 0) {
+    let digit = temp % 10;
+    count[digit]++;
+    temp = Math.floor(temp / 10);
+    digits++;
+  }
+
+  let power = Math.pow(10, digits - 1);
+  let copy = number;
+  let nonRepeatingDigit = null;
+
+  // left to right traversal
+  while (power > 0) {
+    let digit = Math.floor(copy / power);
+
+    if (count[digit] === 1) {
+      nonRepeatingDigit = digit;
+      break;
+    }
+
+    copy = copy % power;
+    power = Math.floor(power / 10);
+  }
+
+  if (nonRepeatingDigit !== null) {
+    console.log("First non-repeating digit:", nonRepeatingDigit);
+  } else {
+    console.log("Non-repeating digit does not exist");
+  }
+}
+```
+
+---
+
+## 8️⃣ Convert Binary to Decimal (Manual Method)
+
+###  Problem Statement
+
+Given a binary number (in numeric form), convert it to its decimal equivalent **without using built-in functions**.
+
+###  Approach (How it works)
+
+1. First validate whether the number is a valid binary (only `0` and `1`).
+2. Traverse the binary number from right to left.
+3. Multiply each bit with `2^power` and add to result.
+4. Increment power after each step.
+
+###  Time & Space Complexity
+
+* Time: `O(n)`
+* Space: `O(1)`
+
+###  Code
+
+```js
+let binaryNumber = 1110;
+let temp = binaryNumber;
+let isValidBinary = true;
+
+// validation
+if (binaryNumber === 0) {
+  console.log("Binary to decimal:", 0);
+} else {
+  while (temp > 0) {
+    let bit = temp % 10;
+    if (bit !== 0 && bit !== 1) {
+      isValidBinary = false;
+      break;
+    }
+    temp = Math.floor(temp / 10);
+  }
+
+  if (isValidBinary) {
+    let decimal = 0;
+    let power = 0;
+    temp = binaryNumber;
+
+    while (temp > 0) {
+      let bit = temp % 10;
+      decimal += bit * Math.pow(2, power);
+      power++;
+      temp = Math.floor(temp / 10);
+    }
+
+    console.log("Binary to decimal:", decimal);
+  } else {
+    console.log("This is not a binary number");
+  }
+}
+```
+
+---
+
+##  Key Takeaways
+
+* Prefer **mathematical digit extraction** in DSA instead of string conversion.
+* Always clarify problem definition: *first repeating* vs *leftmost repeating*.
+* Frequency array of size 10 is optimal for digit-based problems.
+* Write clean code with correct edge-case handling.
+
+---
+
