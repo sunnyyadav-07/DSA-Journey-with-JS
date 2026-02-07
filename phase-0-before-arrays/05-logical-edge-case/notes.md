@@ -611,3 +611,112 @@ if (binaryNumber === 0) {
 
 ---
 
+## 9️⃣ Digital Root
+
+###  What is Digital Root?
+
+Digital root is the **single digit number** obtained by **repeatedly adding the digits** of a number until only **one digit** remains.
+
+###  Example
+
+```
+98755 → 9+8+7+5+5 = 34
+34 → 3+4 = 7
+Digital Root = 7
+```
+---
+
+###  Logic (How it works)
+
+1. Keep summing digits of the number
+2. Replace the number with the sum
+3. Repeat until the number becomes a **single digit**
+
+---
+
+###  Code 
+
+```js
+let number = 98755;
+let temp = number;
+let digitalRoot = null;
+
+while (temp >= 10) {
+  let sum = 0;
+  while (temp > 0) {
+    sum += temp % 10;
+    temp = Math.floor(temp / 10);
+  }
+  temp = sum;
+}
+digitalRoot = temp;
+console.log("Digital Root is", digitalRoot);
+```
+---
+
+###  Key Notes
+
+* Loop condition should be `temp >= 10`
+* Single digit means **digital root found**
+* Time Complexity: **O(d)** where d = number of digits
+
+---
+
+## 🔟 Automorphic Number
+
+###  What is an Automorphic Number?
+
+A number is **automorphic** if its **square ends with the same digits** as the number itself.
+
+---
+
+###  Examples
+
+```
+5²  = 25   → ends with 5  ✅
+25² = 625  → ends with 25 ✅
+76² = 5776 → ends with 76 ✅
+13² = 169  → ends with 13 ❌
+```
+---
+
+###  Logic (How it works)
+
+1. Find square of the number
+2. Count number of digits in the original number
+3. Extract last digits from square using modulo
+4. Compare with original number
+---
+
+###  Code 
+
+```js
+let number = 25;
+if (number === 0 || number === 1) {
+  console.log("Automorphic");
+} else if (number < 0) {
+  console.log("Not automorphic");
+} else {
+  let square = number * number;
+  let temp = number;
+  let digits = 0;
+  while (temp > 0) {
+    temp = Math.floor(temp / 10);
+    digits++;
+  }
+  let lastDigit = square % Math.pow(10, digits);
+  if (lastDigit === number) {
+    console.log("Automorphic");
+  } else {
+    console.log("Not automorphic");
+  }
+}
+```
+---
+
+###  Key Notes
+
+* `% Math.pow(10, digits)` extracts last digits
+* Time Complexity: **O(d)**
+
+---
