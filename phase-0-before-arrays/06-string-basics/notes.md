@@ -169,5 +169,201 @@ console.log("Consonants:", consonants);
 * Always consider **edge cases** (digits, symbols)
 
 ---
+# 📘 String DSA Notes (Day)
+
+---
+
+## 4️⃣ Find Longest Word in a Sentence
+
+###  Problem Statement
+
+Given a sentence, find the **longest word** present in it.
+
+Example:
+
+```
+Input:  "My love is Javascript"
+Output: "Javascript"
+```
+
+### 🔹 Core Concept
+
+* Sentence is a string
+* Word ends when we encounter a **space** or **end of string**
+* We must traverse the string **manually** (no `split()`)
+
+### 🔹 Approach
+
+* Take two variables:
+
+  * `currentWord` → builds the current word
+  * `longestWord` → stores the longest word found so far
+* Traverse the string character by character
+* When space or end is found:
+
+  * compare lengths
+  * update longest word
+  * reset current word
+
+### 🔹 Code
+
+```js
+let sentence = "My love  is Javascript";
+let currentWord = "";
+let longestWord = "";
+for (let i = 0; i <= sentence.length; i++) {
+  if (
+    (sentence[i] === " " && currentWord.length > 0) ||
+    i === sentence.length
+  ) {
+    if (currentWord.length > longestWord.length) {
+      longestWord = currentWord;
+    }
+    currentWord = "";
+  } else {
+    currentWord = currentWord + sentence[i];
+  }
+}
+console.log(longestWord);
+```
+
+### 🔹 Complexity
+
+* Time: O(n)
+* Space: O(n)
+
+---
+
+## 2️5️⃣ Remove Duplicate Characters from String
+
+###  Problem Statement
+
+Given a string, remove **duplicate characters** and return a new string while **maintaining order**.
+
+Example:
+
+```
+Input:  "programming"
+Output: "progamin"
+```
+
+### 🔹 Core Concept
+
+* Strings are **immutable** in JavaScript
+* Use an extra data structure to track visited characters
+
+### 🔹 Approach (Hashing)
+
+* Use an object `seen` to track characters
+* Traverse string left to right
+* If character not seen before:
+
+  * add it to result
+  * mark it as seen
+
+### 🔹 Code
+
+```js
+let string = "programming";
+let seen = {};
+let result = "";
+
+for (let i = 0; i < string.length; i++) {
+  if (!seen[string[i]]) {
+    seen[string[i]] = true;
+    result += string[i];
+  }
+}
+
+console.log(result);
+```
+
+### 🔹 Complexity
+
+* Time: O(n)
+* Space: O(n)
+
+### Optimized solution
+Here, I am using an ASCII frequency array of fixed size 256 to track first occurrences in O(1) time and O(1) space.
+```js
+let seen = new Array(256).fill(false);
+let result = "";
+
+for (let i = 0; i < str.length; i++) {
+  let code = str.charCodeAt(i);
+
+  if (!seen[code]) {
+    seen[code] = true;
+    result += str[i];
+  }
+}
+```
+---
+
+## 6️⃣ Toggle Case of String
+
+###  Problem Statement
+
+Toggle the case of each alphabet character in a string.
+
+* Lowercase → Uppercase
+* Uppercase → Lowercase
+* Numbers & symbols remain unchanged
+
+Example:
+
+```
+Input:  "SuNnY123aB"
+Output: "sUnNy123Ab"
+```
+
+### 🔹 Core Concept
+
+* Alphabets have fixed ASCII ranges
+* Case conversion can be done using ASCII arithmetic
+
+### 🔹 Approach (ASCII based – Interview Preferred)
+
+* Traverse string character by character
+* Check ASCII value:
+
+  * `a–z (97–122)` → convert to uppercase
+  * `A–Z (65–90)` → convert to lowercase
+* Append converted character to result
+
+### 🔹 Code
+
+```js
+let string = "SuNnY123aB";
+let result = "";
+
+for (let i = 0; i < string.length; i++) {
+  let code = string.charCodeAt(i);
+
+  if (code >= 97 && code <= 122) {
+    result += String.fromCharCode(code - 32);
+  } else if (code >= 65 && code <= 90) {
+    result += String.fromCharCode(code + 32);
+  } else {
+    result += string[i];
+  }
+}
+
+console.log(result);
+```
+
+### 🔹 Complexity
+
+* Time: O(n)
+* Space: O(n)
+
+## ✅ Summary
+
+* Strings are immutable in JavaScript
+* Manual traversal builds strong DSA thinking
+* ASCII-based logic is preferred in interviews
+* Always handle edge cases (spaces, digits, symbols)
+
+---
 
 
