@@ -366,4 +366,168 @@ console.log(result);
 
 ---
 
+## 7️⃣ Check if Two Strings Are Anagrams
+
+###  Meaning
+
+Two strings are **anagrams** if:
+
+* They contain the **same characters**
+* With the **same frequency**
+* Order does **not** matter
+
+Example:
+
+```
+listen  → silent  ✅
+aab     → abb     ❌
+```
+
+###  Approach (ASCII / Frequency Array)
+
+* If lengths differ → not anagram
+* Create an array of size **128 / 256**
+* Increase count using first string
+* Decrease count using second string
+* If any count becomes zero before decrement → not anagram
+
+###  Key Logic
+
+* Array index = ASCII code of character
+* Array value = frequency
+
+###  Complexity
+
+* **Time:** O(n)
+* **Space:** O(1) (fixed size array)
+
+---
+
+## 8️⃣ Check if String Contains Only Digits
+
+###  Meaning
+
+Check whether a string contains **only numeric characters (0–9)**.
+
+Examples:
+
+```
+"12345"    ✅
+"12a45"    ❌
+"123@"     ❌
+```
+
+###  Approach
+
+* Traverse string character by character
+* Each character must satisfy:
+
+```
+'0' <= ch <= '9'
+```
+
+###  ASCII Logic
+
+* Digits ASCII range: **48–57**
+* If any character lies outside this range → invalid
+
+###  Complexity
+
+* **Time:** O(n)
+* **Space:** O(1)
+
+---
+
+## 9️⃣ Compress String (Run Length Encoding)
+
+###  Meaning
+
+Replace **consecutive repeating characters** with:
+
+```
+character + count
+```
+
+Example:
+
+```
+aaabb → a3b2
+abab  → a1b1a1b1
+```
+
+### ⚠️ Important
+
+Compression ≠ Frequency count
+Order and consecutiveness **matter**.
+
+###  Approach
+
+* Traverse string once
+* Count consecutive same characters
+* When character changes → append result
+
+###  Core Logic
+
+Compare current character with next one:
+
+* Same → increment count
+* Different → append and reset count
+
+###  Complexity
+
+* **Time:** O(n)
+* **Space:** O(1)
+
+---
+
+## 🔟 Count Frequency of Each Character
+
+###  Meaning
+
+Count how many times each character appears in a string.
+
+Example:
+
+```
+elephant → e:2, l:1, p:1, h:1, a:1, n:1, t:1
+```
+
+###  Approach (Object Based)
+
+* Use an object as a frequency map
+* Increment count for each character
+
+###  Common Pattern
+
+```js
+freq[ch] = (freq[ch] || 0) + 1
+```
+
+###  ASCII Variant
+
+* Use array of size **128 / 256**
+* Index = ASCII code
+
+###  Complexity
+
+* **Time:** O(n)
+* **Space:** O(k) (unique characters)
+
+---
+
+##  Interview Takeaways
+
+* Anagram → frequency matters
+* Only digits → ASCII range check
+* Compression → consecutive logic
+* Frequency → base of many string problems
+
+✅ These patterns help in:
+
+* First non‑repeating character
+* Max occurring character
+* Remove duplicate characters
+* String validation problems
+
+
 
