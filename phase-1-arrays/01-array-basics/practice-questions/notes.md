@@ -172,3 +172,153 @@ O(n)
 * Half array processing
 * Edge case handling
 
+
+## 4️⃣ Remove Duplicates from Sorted Array
+
+###  Problem Statement
+
+Given a **sorted array**, remove the duplicates **in-place** such that each element appears only once and return the number of unique elements.
+
+You must:
+
+* Not use extra array
+* Modify the same array
+* Use O(1) extra space
+
+---
+
+###  Key Idea
+
+Since the array is **sorted**, duplicate elements are always adjacent.
+
+We use the **Two Pointer Technique**:
+
+* `j` → Tracks last unique element position
+* `i` → Traverses the array
+
+---
+
+###  Algorithm
+
+1. Start `j = 0`
+2. Traverse array using `i` from index 1
+3. If `arr[i] !== arr[j]`
+
+   * Increment `j`
+   * Copy `arr[i]` to `arr[j]`
+4. After loop, set `arr.length = j + 1`
+
+---
+
+###  Code
+
+```js
+let arr = [1, 1, 1, 2, 2, 3];
+
+let j = 0;
+for (let i = 1; i < arr.length; i++) {
+  if (arr[i] !== arr[j]) {
+    j++;
+    arr[j] = arr[i];
+  }
+}
+
+arr.length = j + 1;
+console.log(arr);
+```
+
+---
+
+###  Complexity
+
+* Time Complexity → **O(n)**
+* Space Complexity → **O(1)**
+
+---
+
+# 5️⃣ Remove Duplicates Allowing At Most 2 Occurrences
+
+###  Problem Statement
+
+Given a sorted array, allow each element to appear **at most twice**.
+Remove extra duplicates in-place.
+
+Example:
+
+Input:
+
+```
+[1,1,1,2,2,3]
+```
+
+Output:
+
+```
+[1,1,2,2,3]
+```
+
+---
+
+###  Key Observation
+
+If we allow at most **k duplicates**, we:
+
+* Start pointer `j = k`
+* Compare current element with `arr[j - k]`
+
+If equal → skip (extra duplicate)
+If different → copy
+
+---
+
+###  Algorithm (k = 2)
+
+1. If array length <= 2 → return array
+2. Start `j = 2`
+3. Traverse from `i = 2`
+4. If `arr[i] !== arr[j - 2]`
+
+   * Copy `arr[i]` to `arr[j]`
+   * Increment `j`
+5. Set `arr.length = j`
+
+---
+
+###  Code
+
+```js
+let arr = [1, 1, 1, 2, 2, 3, 3];
+
+let j = 2;
+for (let i = 2; i < arr.length; i++) {
+  if (arr[i] !== arr[j - 2]) {
+    arr[j] = arr[i];
+    j++;
+  }
+}
+
+arr.length = j;
+console.log(arr);
+```
+
+---
+
+###  Complexity
+
+* Time Complexity → **O(n)**
+* Space Complexity → **O(1)**
+
+---
+
+#  General Formula (Very Important)
+
+If allowing at most **k duplicates**:
+
+```
+Start j = k
+If arr[i] !== arr[j - k]
+```
+
+This is a powerful pattern for sorted array problems.
+
+---
