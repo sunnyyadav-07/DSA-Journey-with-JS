@@ -6,6 +6,9 @@ Given a string s consisting of lowercase English letters, return the first lette
 
 */
 
+// Time complexity O(n)
+// Space complexity O(n)
+
 let string="abccbaacz";
 
 var repeatedCharacter = function (s) {

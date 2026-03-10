@@ -6,6 +6,9 @@ You're given strings jewels representing the types of stones that are jewels, an
 
 */
 
+// Time complexity O(n)
+// Space complexity O(m)
+
 let jewels="aA";
 let stones = "aAAbbbb";
 let set=new Set(jewels)
