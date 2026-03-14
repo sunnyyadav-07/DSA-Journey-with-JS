@@ -425,3 +425,507 @@ A **Map is usually the best data structure to use.**
 
 ---
 
+# 6. Decode the Message
+
+## Problem
+
+You are given two strings:
+
+* `key` → contains all 26 alphabets in some random order
+* `message` → encoded message
+
+The **first appearance of each character in the key** determines the mapping to the **normal alphabet (a-z)**.
+
+Spaces remain unchanged.
+
+Example key:
+
+```
+the quick brown fox jumps over the lazy dog
+```
+
+Mapping becomes:
+
+```
+t → a
+h → b
+e → c
+q → d
+u → e
+...
+```
+
+Then every character of message is replaced using this mapping.
+
+---
+
+## Approach
+
+Step 1: Create a mapping structure of size 26.
+
+Step 2: Traverse the `key`.
+
+Step 3: Ignore spaces.
+
+Step 4: If the character appears **first time**, assign next alphabet (`a,b,c,d...`).
+
+Step 5: Traverse the `message` and replace characters using mapping.
+
+---
+
+## Code
+
+```javascript
+let key = "the quick brown fox jumps over the lazy dog";
+let message = "vkbs bs t suepuv";
+
+let freq = new Array(26).fill(-1);
+let chCode = "a".charCodeAt(0);
+let ans = "";
+
+for (let i = 0; i < key.length; i++) {
+  if (key[i] === " ") continue;
+
+  let index = key[i].charCodeAt(0) - "a".charCodeAt(0);
+
+  if (freq[index] === -1) {
+    freq[index] = String.fromCharCode(chCode);
+    chCode++;
+  }
+}
+
+for (let it of message) {
+  if (it === " ") {
+    ans += " ";
+  } else {
+    let index = it.charCodeAt(0) - "a".charCodeAt(0);
+    ans += freq[index];
+  }
+}
+
+console.log(ans);
+```
+
+---
+
+## Time Complexity
+
+O(n + m)
+
+`n` → key length
+`m` → message length
+
+---
+
+## Space Complexity
+
+O(26) → constant
+
+---
+
+## Why this works
+
+Alphabet size is fixed (26). Once mapping is built, every lookup becomes **O(1)**.
+
+---
+
+# 7. Distribute Candies
+
+## Problem
+
+Alice has `n` candies but doctor allows her to eat **only n/2 candies**.
+
+Each candy has a **type**.
+
+Goal:
+
+> Eat maximum number of **different candy types**.
+
+Example
+
+```
+[1,1,2,2,3,3]
+```
+
+Total candies = 6
+She can eat = 3
+
+Unique types = 3
+
+Answer = **3**
+
+---
+
+## Key Observation
+
+She **cannot eat more than n/2 candies**, even if more types exist.
+
+So answer =
+
+```
+min(uniqueTypes, n/2)
+```
+
+---
+
+## Code
+
+```javascript
+let candies = [1, 1, 2, 2, 3, 3];
+
+var distributeCandies = function (candyType) {
+  let set = new Set(candyType).size;
+
+  return Math.min(set, candyType.length / 2);
+};
+
+console.log(distributeCandies(candies));
+```
+
+---
+
+## Time Complexity
+
+O(n)
+
+---
+
+## Space Complexity
+
+O(n)
+
+---
+
+## Why Set Works
+
+Set stores **only unique values**.
+
+So it directly gives number of **distinct candy types**.
+
+---
+
+# 8. Kth Distinct String
+
+## Problem
+
+Return the **kth string that appears exactly once**.
+
+Example
+
+```
+arr = ["d","b","c","b","c","a"]
+k = 2
+```
+
+Distinct strings:
+
+```
+d , a
+```
+
+Answer = **a**
+
+---
+
+## Approach
+
+Step 1: Count frequency using `Map`.
+
+Step 2: Traverse array again.
+
+Step 3: When frequency == 1 → distinct element.
+
+Step 4: Decrease `k`.
+
+Step 5: When `k == 0` return that element.
+
+---
+
+## Code
+
+```javascript
+let str = ["d", "b", "c", "b", "c", "a"];
+let k = 2;
+
+const kthDistinct = function (arr, k) {
+  let map = new Map();
+
+  for (let i = 0; i < arr.length; i++) {
+    map.set(arr[i], (map.get(arr[i]) || 0) + 1);
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (map.get(arr[i]) === 1) {
+      k--;
+      if (k === 0) return arr[i];
+    }
+  }
+
+  return "";
+};
+
+console.log(kthDistinct(str, k));
+```
+
+---
+
+## Time Complexity
+
+O(n)
+
+---
+
+## Space Complexity
+
+O(n)
+
+---
+
+## Why Two Passes
+
+First pass → frequency count
+Second pass → preserve original order
+
+---
+
+# 9. Word Pattern
+
+## Problem
+
+Check if pattern matches words in string using **bijection mapping**.
+
+Example
+
+```
+pattern = "abba"
+s = "dog cat cat dog"
+```
+
+Mapping
+
+```
+a → dog
+b → cat
+```
+
+Valid pattern.
+
+---
+
+## Important Rule
+
+Mapping must be **one-to-one**.
+
+Meaning:
+
+```
+pattern → word
+word → pattern
+```
+
+Both must be unique.
+
+---
+
+## Approach
+
+Use **two maps**.
+
+```
+map1 : pattern → word
+map2 : word → pattern
+```
+
+Steps
+
+1 Split string into words
+2 Check length mismatch
+3 Traverse together
+4 Maintain mapping consistency
+
+---
+
+## Code
+
+```javascript
+let pattern = "abba";
+let s = "dog cat cat dog";
+
+const wordPattern = function (pattern, s) {
+  let map1 = new Map();
+  let map2 = new Map();
+
+  let words = s.split(" ");
+
+  if (pattern.length !== words.length) return false;
+
+  for (let i = 0; i < words.length; i++) {
+    let p = pattern[i];
+    let w = words[i];
+
+    if (!map1.has(p) && !map2.has(w)) {
+      map1.set(p, w);
+      map2.set(w, p);
+    } else {
+      if (map1.get(p) !== w || map2.get(w) !== p) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
+console.log(wordPattern(pattern, s));
+```
+
+---
+
+## Time Complexity
+
+O(n)
+
+---
+
+## Space Complexity
+
+O(n)
+
+---
+
+## Why Two Maps
+
+Ensures **bijection**.
+
+Without second map two pattern letters could map to same word.
+
+---
+
+# 10. Set Mismatch (Find Duplicate and Missing)
+
+## Problem
+
+Array contains numbers **1..n** but:
+
+* one number duplicated
+* one number missing
+
+Example
+
+```
+[3,2,2]
+```
+
+Duplicate = 2
+Missing = 1
+
+---
+
+## Approach (Index Marking Trick)
+
+Idea:
+
+Use array indices as **visited markers**.
+
+Steps
+
+1 Traverse array
+2 Convert value → index using `abs(nums[i]) - 1`
+3 If element already negative → duplicate found
+4 Otherwise mark visited by making negative
+
+Second pass:
+
+Positive index indicates **missing number**.
+
+---
+
+## Code
+
+```javascript
+let nums = [3, 2, 2];
+
+let duplicate = -1;
+let missing = -1;
+
+const misMatch = function (nums) {
+  for (let i = 0; i < nums.length; i++) {
+    let index = Math.abs(nums[i]) - 1;
+
+    if (nums[index] < 0) {
+      duplicate = Math.abs(nums[i]);
+    } else {
+      nums[index] *= -1;
+    }
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > 0) {
+      missing = i + 1;
+    }
+  }
+
+  return [duplicate, missing];
+};
+
+console.log(misMatch(nums));
+```
+
+---
+
+## Time Complexity
+
+O(n)
+
+---
+
+## Space Complexity
+
+O(1)
+
+---
+
+## Why This Trick Works
+
+Values range **1..n**.
+
+So each value maps directly to **index position**.
+
+By flipping sign we mark elements as visited **without extra memory**.
+
+---
+
+# Important Hashing Patterns
+
+## When to use Map
+
+Use Map when:
+
+• frequency counting
+• key → value mapping
+• bijection problems
+• lookup optimization
+
+---
+
+## When to use Set
+
+Use Set when:
+
+• unique elements required
+• duplicate detection
+• counting distinct items
+
+---
+
+## When to use Index Marking
+
+Use when:
+
+• numbers range **1..n**
+• extra space not allowed
+• need O(1) memory solution
+
+---
+
+
